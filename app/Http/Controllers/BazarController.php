@@ -15,7 +15,14 @@ class BazarController extends Controller
     {
         $this->authorize('viewAny', Bazar::class);
 
-        return BazarResource::collection(Bazar::all());
+        return inertia()->render('Bazar/Index');
+    }
+
+    public function create()
+    {
+        $this->authorize('create', Bazar::class);
+
+        return inertia()->render('Bazar/Create');
     }
 
     public function store(BazarRequest $request)

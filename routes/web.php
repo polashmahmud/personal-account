@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BazarController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -10,6 +11,7 @@ Route::get('/', HomeController::class)->name('home');
 // Admin
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    Route::resource('/bazars', BazarController::class);
 });
 
 Route::middleware('auth')->group(function () {

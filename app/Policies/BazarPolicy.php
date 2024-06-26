@@ -12,30 +12,36 @@ class BazarPolicy
 
     public function viewAny(User $user)
     {
-
+        return $user->isAdmin();
     }
 
     public function view(User $user, Bazar $bazar)
     {
+        return $user->isAdmin();
     }
 
     public function create(User $user)
     {
+        return $user->isAdmin();
     }
 
     public function update(User $user, Bazar $bazar)
     {
+        return $user->isAdmin();
     }
 
     public function delete(User $user, Bazar $bazar)
     {
+        return $user->isAdmin();
     }
 
     public function restore(User $user, Bazar $bazar)
     {
+        return $user->isAdmin();
     }
 
     public function forceDelete(User $user, Bazar $bazar)
     {
+        return $user->isAdmin();
     }
 }
