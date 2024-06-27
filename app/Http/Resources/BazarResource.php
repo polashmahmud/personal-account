@@ -11,13 +11,12 @@ class BazarResource extends JsonResource
     public function toArray(Request $request)
     {
         return [
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'id'         => $this->id,
-            'title'      => $this->title,
-            'amount'     => $this->amount,
-            'increase'   => $this->increase,
-            'type'       => $this->type,
+            'id'       => $this->id,
+            'title'    => $this->title,
+            'amount'   => $this->amount,
+            'increase' => $this->increase,
+            'type'     => $this->type,
+            'image'    => $this->getImageAttribute(),
         ];
     }
 }

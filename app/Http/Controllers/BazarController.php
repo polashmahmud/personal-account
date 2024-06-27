@@ -15,7 +15,9 @@ class BazarController extends Controller
     {
         $this->authorize('viewAny', Bazar::class);
 
-        return inertia()->render('Bazar/Index');
+        return inertia()->render('Bazar/Index', [
+            'bazars' => BazarResource::collection(Bazar::latest()->paginate())
+        ]);
     }
 
     public function create()
@@ -29,7 +31,14 @@ class BazarController extends Controller
     {
         $this->authorize('create', Bazar::class);
 
-        return new BazarResource(Bazar::create($request->validated()));
+        $bazar = Bazar::create($request->validated());
+
+        if ($request->hasFile('image')) {
+            $bazar->addMediaFromRequest('image')
+                ->toMediaCollection('image');
+        }
+
+        return redirect()->route('bazars.index')->with('success', 'Bazar created.');
     }
 
     public function show(Bazar $bazar)
