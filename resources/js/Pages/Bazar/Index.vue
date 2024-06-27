@@ -9,6 +9,14 @@ defineProps({
         type: Object
     }
 })
+
+const deleteBazar = (bazar) => {
+    if (confirm('Are you sure you want to delete this bazar?')) {
+        router.delete(route('bazars.destroy', bazar.id), {
+            preserveScroll: true
+        });
+    }
+}
 </script>
 
 <template>
@@ -62,8 +70,8 @@ defineProps({
                             </td>
                             <td class="px-6 py-4">
                                 <div class="space-x-3">
-                                    <button class="text-blue-500 hover:text-blue-600 text-sm">Edit</button>
-                                    <button class="text-red-500 hover:text-red-600 text-sm">Delete</button>
+                                    <button @click.prevent="router.visit(route('bazars.edit', bazar))" class="text-blue-500 hover:text-blue-600 text-sm">Edit</button>
+                                    <button @click.prevent="deleteBazar(bazar)" class="text-red-500 hover:text-red-600 text-sm">Delete</button>
                                 </div>
                             </td>
                         </tr>

@@ -13,8 +13,6 @@ class BazarController extends Controller
 
     public function index()
     {
-        $this->authorize('viewAny', Bazar::class);
-
         return inertia()->render('Bazar/Index', [
             'bazars' => BazarResource::collection(Bazar::latest()->paginate())
         ]);
@@ -22,15 +20,11 @@ class BazarController extends Controller
 
     public function create()
     {
-        $this->authorize('create', Bazar::class);
-
         return inertia()->render('Bazar/Create');
     }
 
     public function store(BazarRequest $request)
     {
-        $this->authorize('create', Bazar::class);
-
         $bazar = Bazar::create($request->validated());
 
         if ($request->hasFile('image')) {
@@ -41,17 +35,15 @@ class BazarController extends Controller
         return redirect()->route('bazars.index')->with('success', 'Bazar created.');
     }
 
-    public function show(Bazar $bazar)
+    public function edit(Bazar $bazar)
     {
-        $this->authorize('view', $bazar);
-
-        return new BazarResource($bazar);
+        return inertia()->render('Bazar/Edit', [
+            'bazar' => new BazarResource($bazar)
+        ]);
     }
 
     public function update(BazarRequest $request, Bazar $bazar)
     {
-        $this->authorize('update', $bazar);
-
         $bazar->update($request->validated());
 
         return new BazarResource($bazar);
@@ -59,10 +51,8 @@ class BazarController extends Controller
 
     public function destroy(Bazar $bazar)
     {
-        $this->authorize('delete', $bazar);
-
         $bazar->delete();
 
-        return response()->json();
+        return back()->with('success', 'Bazar deleted.');
     }
 }
