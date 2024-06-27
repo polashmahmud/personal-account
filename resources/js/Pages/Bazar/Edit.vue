@@ -14,28 +14,29 @@ const props = defineProps({
 })
 
 const form = useForm({
+    _method: 'patch',
     title: props.bazar.title,
-    amount: props.bazar.amount,
-    increase: props.bazar.increase,
-    type: props.bazar.type,
+    amount: props.bazar.amount ?? '',
+    increase: props.bazar.increase ?? '',
+    type: props.bazar.type ?? 'kg',
     image: '',
 });
 
 const submit = () => {
-    form.post(route('bazars.store'), {
+    form.patch(route('bazars.update', props.bazar), {
         preserveScroll: true
     });
 }
 </script>
 
 <template>
-    <Head title="Bazar Create" />
+    <Head title="Bazar Edit" />
 
     <AdminLayout>
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 text-gray-900 dark:text-gray-100">
                 <div class="flex items-center justify-between border-b border-gray-600 pb-6 mb-6">
-                    <h1 class="text-2xl font-semibold">Create Bazar Item</h1>
+                    <h1 class="text-2xl font-semibold">Update Bazar Item</h1>
                     <SecondaryButton @click.prevent="router.visit(route('bazars.index'))">Back</SecondaryButton>
                 </div>
 
@@ -100,7 +101,7 @@ const submit = () => {
                     </div>
                     <div class="flex items-center justify-end mt-4">
                         <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            Add new Bazar Item
+                            {{ form.processing ? 'Saving...' : 'Save' }}
                         </PrimaryButton>
                     </div>
                 </form>

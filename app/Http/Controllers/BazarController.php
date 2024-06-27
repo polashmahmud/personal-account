@@ -5,12 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BazarRequest;
 use App\Http\Resources\BazarResource;
 use App\Models\Bazar;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class BazarController extends Controller
 {
-    use AuthorizesRequests;
-
     public function index()
     {
         return inertia()->render('Bazar/Index', [
@@ -46,7 +43,12 @@ class BazarController extends Controller
     {
         $bazar->update($request->validated());
 
-        return new BazarResource($bazar);
+        if ($request->hasFile('image')) {
+            $bazar->addMediaFromRequest('image')
+                ->toMediaCollection('image');
+        }
+
+        return redirect()->route('bazars.index')->with('success', 'Bazar updated.');
     }
 
     public function destroy(Bazar $bazar)
